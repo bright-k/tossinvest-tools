@@ -1,0 +1,8 @@
+bin/tossinvest-tools: Mach-O 64-bit executable arm64
+{"go":"1.27.3","mode":"readonly","rest_api":"1.2.24","version":"0.2.0","websocket_api":"1.2.2"}
+bin/tossinvest-tools:
+	/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61123.100.169)
+	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 2420.0.0)
+	/usr/lib/libresolv.9.dylib (compatibility version 1.0.0, current version 1.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1345.100.2)
+SHA256 496ce5bdae37da599d2001b30de841226b8b9166dffa0cace23d54682381d144  bin/tossinvest-tools

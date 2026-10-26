@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "file": "openapi.json",
+      "url": "https://openapi.tossinvest.com/openapi-docs/latest/openapi.json",
+      "retrieved_on": "2026-10-26",
+      "date_timezone": "Asia/Seoul",
+      "specification_version": "3.1.0",
+      "api_version": "1.2.24",
+      "sha256": "7e753c21dc4b938d8f9610ce3efd6542783018977cb030e39db5a006f5b59d40",
+      "bytes": 465774
+    },
+    {
+      "file": "asyncapi.json",
+      "url": "https://openapi.tossinvest.com/openapi-docs/latest/asyncapi.json",
+      "retrieved_on": "2026-10-26",
+      "date_timezone": "Asia/Seoul",
+      "specification_version": "3.0.0",
+      "api_version": "1.2.2",
+      "sha256": "130251057fd9535a3e276099f9166b445f8c51f505f30540758e4b209231282e",
+      "bytes": 41523
+    }
+  ],
+  "rest_path_count": 38,
+  "rest_operation_count": 41,
+  "rest_exposure_counts": {
+    "internal": 1,
+    "read_tool": 34,
+    "approved_action": 6
+  },
+  "websocket_channel_count": 4,
+  "websocket_operation_count": 10
+}

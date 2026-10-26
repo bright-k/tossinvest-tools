@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+case "$(uname -s)-$(uname -m)" in Darwin-arm64) ;; *) echo 'Pinned bootstrap currently supports macOS ARM64 only' >&2; exit 2;; esac
+mkdir -p .tools/downloads
+ARCHIVE=.tools/downloads/go1.27.3.darwin-arm64.tar.gz
+if [ ! -f "$ARCHIVE" ]; then curl -fL https://go.dev/dl/go1.27.3.darwin-arm64.tar.gz -o "$ARCHIVE"; fi
+printf '%s  %s\n' dd3908cf20959d798c1e06ebe5b72213f0505ce01373b40ce3110975a6cd99c2 "$ARCHIVE" | shasum -a 256 -c -
+if [ ! -x .tools/go/bin/go ]; then tar -xzf "$ARCHIVE" -C .tools; fi
+if [ "$(.tools/go/bin/go env GOVERSION)" != "go1.27.3" ]; then echo "Existing .tools/go version differs; preserve it and extract the verified archive to .tools/go before continuing." >&2; exit 2; fi
+./scripts/go version
+./scripts/go mod download
+./scripts/go mod verify

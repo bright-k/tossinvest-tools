@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+case "$(uname -s)-$(uname -m)" in Darwin-arm64) ;; *) echo 'Pinned audit bootstrap supports macOS ARM64.' >&2; exit 2;; esac
+mkdir -p .tools/downloads .tools/gitleaks
+ARCHIVE=.tools/downloads/gitleaks_8.30.1_darwin_arm64.tar.gz
+if [ ! -f "$ARCHIVE" ]; then curl -fsSL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_darwin_arm64.tar.gz -o "$ARCHIVE"; fi
+printf '%s  %s\n' b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5 "$ARCHIVE" | shasum -a 256 -c -
+tar -xzf "$ARCHIVE" -C .tools/gitleaks gitleaks
+.tools/gitleaks/gitleaks version

@@ -1,0 +1,1 @@
+{"client": "built CLI with local PTY", "selection": "passed", "revocation": "passed", "status": "passed", "credential_cleanup": "passed", "crash_stale_file_rejected": "passed", "crash_restart_rotation": "passed", "backend": "mock", "read_queries": "accounts_holdings_prices_passed", "revoked_holdings": "exit_4_permission_denied", "no_server_query": "exit_3_no_fallback"}

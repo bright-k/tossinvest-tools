@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Seoul",
+  "scope": "CLI accounts / holdings / prices through existing authenticated MCP server",
+  "backend_tested": "mock",
+  "actual_toss_credentials_used": false,
+  "actual_accounts_queried": false,
+  "services_installed": false,
+  "new_dependencies": false,
+  "mcp_tool_counts_changed": false,
+  "tests": {
+    "tests": {
+      "passed_tests_and_subtests": 399,
+      "tested_packages": 7,
+      "failures": 0
+    },
+    "race": {
+      "passed_tests_and_subtests": 399,
+      "tested_packages": 7,
+      "failures": 0
+    }
+  },
+  "standalone_cli": {
+    "client": "built CLI with local PTY",
+    "selection": "passed",
+    "revocation": "passed",
+    "status": "passed",
+    "credential_cleanup": "passed",
+    "crash_stale_file_rejected": "passed",
+    "crash_restart_rotation": "passed",
+    "backend": "mock",
+    "read_queries": "accounts_holdings_prices_passed",
+    "revoked_holdings": "exit_4_permission_denied",
+    "no_server_query": "exit_3_no_fallback"
+  },
+  "binary": "bin/tossinvest-tools",
+  "sha256": "496ce5bdae37da599d2001b30de841226b8b9166dffa0cace23d54682381d144"
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+export GOPATH="$ROOT/.tools/gopath" GOCACHE="$ROOT/.tools/gocache" GOTOOLCHAIN=local
+if [ "$("$ROOT/.tools/go/bin/go" env GOVERSION)" != "go1.27.3" ]; then echo "Expected Go 1.27.3; run ./scripts/bootstrap" >&2; exit 2; fi
+exec "$ROOT/.tools/go/bin/go" "$@"

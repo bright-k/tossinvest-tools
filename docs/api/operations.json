@@ -1,0 +1,1849 @@
+{
+  "schema_version": 2,
+  "baseline_date": "2026-10-26",
+  "rest_source": "specs/tossinvest/openapi.json",
+  "rest_api_version": "1.2.24",
+  "asyncapi_source": "specs/tossinvest/asyncapi.json",
+  "websocket_api_version": "1.2.2",
+  "status_meaning": "verified means offline contract acceptance; live-verified needs separate authorized evidence",
+  "rest_operations": [
+    {
+      "operation_id": "issueOAuth2Token",
+      "method": "POST",
+      "path": "/oauth2/token",
+      "group": "Auth",
+      "summary": "OAuth2 액세스 토큰 발급",
+      "requires_account_context": false,
+      "upstream_parameters": [],
+      "request_body_defined": true,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "internal",
+      "mcp_tool": null,
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "auth",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getOrderbook",
+      "method": "GET",
+      "path": "/api/v1/orderbook",
+      "group": "Market Data",
+      "summary": "호가 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_orderbook",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getPrices",
+      "method": "GET",
+      "path": "/api/v1/prices",
+      "group": "Market Data",
+      "summary": "현재가 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbols",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md",
+        "internal/cli/query_test.go",
+        "internal/runtime/query_test.go",
+        "docs/verification/cli-queries.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_prices",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "cli_command": "prices --symbols=<symbols> [--json]"
+    },
+    {
+      "operation_id": "getTrades",
+      "method": "GET",
+      "path": "/api/v1/trades",
+      "group": "Market Data",
+      "summary": "최근 체결 내역 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_trades",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getPriceLimit",
+      "method": "GET",
+      "path": "/api/v1/price-limits",
+      "group": "Market Data",
+      "summary": "상/하한가 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_price_limits",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getCandles",
+      "method": "GET",
+      "path": "/api/v1/candles",
+      "group": "Market Data",
+      "summary": "캔들 차트 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "interval",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "adjusted",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_candles",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStocks",
+      "method": "GET",
+      "path": "/api/v1/stocks",
+      "group": "Stock Info",
+      "summary": "종목 기본 정보 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbols",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stocks",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "listStocks",
+      "method": "GET",
+      "path": "/api/v1/stocks/all",
+      "group": "Stock Info",
+      "summary": "마켓별 전체 종목 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "market",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "securityType",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "commonShare",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_list_stocks",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockWarnings",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/warnings",
+      "group": "Stock Info",
+      "summary": "매수 유의사항 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_warnings",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockInvestorTrading",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/investor-trading",
+      "group": "Stock Info",
+      "summary": "투자자별 매매동향 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_investor_trading",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockProgramTrades",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/program-trades",
+      "group": "Stock Info",
+      "summary": "프로그램매매 동향 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_program_trades",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockShortSelling",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/short-selling",
+      "group": "Stock Info",
+      "summary": "공매도 동향 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_short_selling",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockCreditTrades",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/credit-trades",
+      "group": "Stock Info",
+      "summary": "신용거래 동향 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_credit_trades",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getStockSecuritiesLending",
+      "method": "GET",
+      "path": "/api/v1/stocks/{symbol}/securities-lending",
+      "group": "Stock Info",
+      "summary": "대차거래 동향 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_stock_securities_lending",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getExchangeRate",
+      "method": "GET",
+      "path": "/api/v1/exchange-rate",
+      "group": "Market Info",
+      "summary": "환율 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "dateTime",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "baseCurrency",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "quoteCurrency",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_exchange_rate",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getKrMarketCalendar",
+      "method": "GET",
+      "path": "/api/v1/market-calendar/KR",
+      "group": "Market Info",
+      "summary": "국내 장 운영 정보 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "date",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_kr_market_calendar",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getUsMarketCalendar",
+      "method": "GET",
+      "path": "/api/v1/market-calendar/US",
+      "group": "Market Info",
+      "summary": "해외 장 운영 정보 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "date",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_us_market_calendar",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getRankings",
+      "method": "GET",
+      "path": "/api/v1/rankings",
+      "group": "Ranking",
+      "summary": "주식 랭킹 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "type",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "marketCountry",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "duration",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "excludeInvestmentCaution",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_rankings",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getMarketIndicatorPrices",
+      "method": "GET",
+      "path": "/api/v1/market-indicators/prices",
+      "group": "Market Indicators",
+      "summary": "시장 지표 현재가 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbols",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_market_indicator_prices",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getMarketIndicatorCandles",
+      "method": "GET",
+      "path": "/api/v1/market-indicators/{symbol}/candles",
+      "group": "Market Indicators",
+      "summary": "시장 지표 캔들 차트 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "interval",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_market_indicator_candles",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getMarketIndicatorInvestorTrading",
+      "method": "GET",
+      "path": "/api/v1/market-indicators/{symbol}/investor-trading",
+      "group": "Market Indicators",
+      "summary": "투자자별 매매대금 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "interval",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "until",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_market_indicator_investor_trading",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "listSectors",
+      "method": "GET",
+      "path": "/api/v1/sectors",
+      "group": "Sector",
+      "summary": "섹터 목록 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_list_sectors",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getSectorRankings",
+      "method": "GET",
+      "path": "/api/v1/sectors/rankings",
+      "group": "Sector",
+      "summary": "섹터 랭킹 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "type",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "marketCountry",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "duration",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_sector_rankings",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getSector",
+      "method": "GET",
+      "path": "/api/v1/sectors/{sectorId}",
+      "group": "Sector",
+      "summary": "섹터 상세 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "sectorId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "marketCountry",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_sector",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getSectorStocks",
+      "method": "GET",
+      "path": "/api/v1/sectors/{sectorId}/stocks",
+      "group": "Sector",
+      "summary": "섹터 구성 주식 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "sectorId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "marketCountry",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_sector_stocks",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getSectorEtfs",
+      "method": "GET",
+      "path": "/api/v1/sectors/{sectorId}/etfs",
+      "group": "Sector",
+      "summary": "섹터 관련 ETF 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [
+        {
+          "name": "sectorId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "marketCountry",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_sector_etfs",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1"
+    },
+    {
+      "operation_id": "getAccounts",
+      "method": "GET",
+      "path": "/api/v1/accounts",
+      "group": "Account",
+      "summary": "계좌 목록 조회",
+      "requires_account_context": false,
+      "upstream_parameters": [],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md",
+        "internal/cli/query_test.go",
+        "internal/runtime/query_test.go",
+        "docs/verification/cli-queries.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_accounts",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한",
+      "cli_command": "accounts [--json]"
+    },
+    {
+      "operation_id": "getHoldings",
+      "method": "GET",
+      "path": "/api/v1/holdings",
+      "group": "Asset",
+      "summary": "보유 주식 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md",
+        "internal/cli/query_test.go",
+        "internal/runtime/query_test.go",
+        "docs/verification/cli-queries.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_holdings",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한",
+      "cli_command": "holdings --account-alias=<alias> [--symbol=<symbol>] [--json]"
+    },
+    {
+      "operation_id": "getOrders",
+      "method": "GET",
+      "path": "/api/v1/orders",
+      "group": "Order History",
+      "summary": "주문 목록 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "status",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "from",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "to",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "cursor",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_list_orders",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "createOrder",
+      "method": "POST",
+      "path": "/api/v1/orders",
+      "group": "Order",
+      "summary": "주문 생성",
+      "requires_account_context": true,
+      "upstream_parameters": [],
+      "request_body_defined": true,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_order",
+      "action": "order.create",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getOrder",
+      "method": "GET",
+      "path": "/api/v1/orders/{orderId}",
+      "group": "Order History",
+      "summary": "주문 상세 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_order",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#주문-id와-계좌-소유-관계"
+    },
+    {
+      "operation_id": "modifyOrder",
+      "method": "POST",
+      "path": "/api/v1/orders/{orderId}/modify",
+      "group": "Order",
+      "summary": "주문 정정",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": true,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_order_modification",
+      "action": "order.modify",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "cancelOrder",
+      "method": "POST",
+      "path": "/api/v1/orders/{orderId}/cancel",
+      "group": "Order",
+      "summary": "주문 취소",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": true,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_order_cancellation",
+      "action": "order.cancel",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "createConditionalOrder",
+      "method": "POST",
+      "path": "/api/v1/conditional-orders",
+      "group": "Conditional Order",
+      "summary": "조건주문 생성",
+      "requires_account_context": true,
+      "upstream_parameters": [],
+      "request_body_defined": true,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_conditional_order",
+      "action": "conditional_order.create",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getConditionalOrders",
+      "method": "GET",
+      "path": "/api/v1/conditional-orders",
+      "group": "Conditional Order History",
+      "summary": "조건주문 목록 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "status",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "cursor",
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_list_conditional_orders",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getConditionalOrder",
+      "method": "GET",
+      "path": "/api/v1/conditional-orders/{conditionalOrderId}",
+      "group": "Conditional Order History",
+      "summary": "조건주문 상세 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "conditionalOrderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_conditional_order",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#주문-id와-계좌-소유-관계"
+    },
+    {
+      "operation_id": "cancelConditionalOrder",
+      "method": "DELETE",
+      "path": "/api/v1/conditional-orders/{conditionalOrderId}",
+      "group": "Conditional Order",
+      "summary": "조건주문 취소",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "conditionalOrderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_conditional_order_cancellation",
+      "action": "conditional_order.cancel",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "modifyConditionalOrder",
+      "method": "POST",
+      "path": "/api/v1/conditional-orders/{conditionalOrderId}/modify",
+      "group": "Conditional Order",
+      "summary": "조건주문 수정",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "conditionalOrderId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "request_body_defined": true,
+      "status": "planned",
+      "verification_evidence": [],
+      "exposure": "approved_action",
+      "mcp_tool": "tossinvest_prepare_conditional_order_modification",
+      "action": "conditional_order.modify",
+      "execution_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "first_milestone": "T1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getBuyingPower",
+      "method": "GET",
+      "path": "/api/v1/buying-power",
+      "group": "Order Info",
+      "summary": "매수 가능 금액 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "currency",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_buying_power",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getSellableQuantity",
+      "method": "GET",
+      "path": "/api/v1/sellable-quantity",
+      "group": "Order Info",
+      "summary": "판매 가능 수량 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [
+        {
+          "name": "symbol",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_sellable_quantity",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "operation_id": "getCommissions",
+      "method": "GET",
+      "path": "/api/v1/commissions",
+      "group": "Order Info",
+      "summary": "매매 수수료 조회",
+      "requires_account_context": true,
+      "upstream_parameters": [],
+      "request_body_defined": false,
+      "status": "verified",
+      "verification_evidence": [
+        "internal/broker/toss/rest_test.go",
+        "internal/contract/catalog_test.go",
+        "internal/core/service_test.go",
+        "docs/verification/README.md"
+      ],
+      "exposure": "read_tool",
+      "mcp_tool": "tossinvest_get_commissions",
+      "action": null,
+      "execution_tool": null,
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "broker_read",
+      "first_milestone": "R1",
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    }
+  ],
+  "websocket_operations": [
+    {
+      "operation_id": "subscribeTrade",
+      "action": "send",
+      "channel": "realtime-trade",
+      "summary": "trade:us / trade:kr 항목을 담은 선언 배열 전송 (full-replace)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receiveTrade",
+      "action": "receive",
+      "channel": "realtime-trade",
+      "summary": "구독 종목이 체결될 때마다 푸시",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "subscribeOrderbook",
+      "action": "send",
+      "channel": "realtime-orderbook",
+      "summary": "orderbook:us / orderbook:kr 항목을 담은 선언 배열 전송 (full-replace)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receiveOrderbook",
+      "action": "receive",
+      "channel": "realtime-orderbook",
+      "summary": "구독 종목의 호가가 갱신될 때마다 푸시",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "subscribeOrder",
+      "action": "send",
+      "channel": "realtime-order",
+      "summary": "personal:order 항목(accountSeq)을 담은 선언 배열 전송 (full-replace)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receiveOrder",
+      "action": "receive",
+      "channel": "realtime-order",
+      "summary": "본인 계좌 주문 상태 변화마다 푸시",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receiveSubscriptionsAck",
+      "action": "receive",
+      "channel": "connection",
+      "summary": "선언 직후 확정·거부 결과 (모든 채널 공통)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receiveError",
+      "action": "receive",
+      "channel": "connection",
+      "summary": "선언 전체 실패(기존 구독 유지) 또는 서버 배포 시 도착 (모든 채널 공통)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "sendPing",
+      "action": "send",
+      "channel": "connection",
+      "summary": "keepalive 요청 — JSON 이 아닌 순수 텍스트 프레임 (대문자 4글자, 60초 간격 권장)",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    },
+    {
+      "operation_id": "receivePong",
+      "action": "receive",
+      "channel": "connection",
+      "summary": "텍스트 PING 에 대한 keepalive 응답",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/core/streams_test.go",
+        "internal/runtime/server_test.go",
+        "internal/core/events_test.go",
+        "internal/store/store_test.go",
+        "docs/verification/README.md"
+      ],
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "first_milestone": "R2"
+    }
+  ],
+  "runtime_profiles": {
+    "default_mode": "readonly",
+    "modes": [
+      "readonly",
+      "trading"
+    ],
+    "default_backend": "toss",
+    "backends": [
+      "toss",
+      "mock"
+    ],
+    "mode_selected_by": "explicit process startup flag; omitted means readonly",
+    "hot_upgrade": false
+  },
+  "additional_tools": [
+    {
+      "mcp_tool": "tossinvest_get_server_status",
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "local_read",
+      "read_only_hint": true,
+      "first_milestone": "R1",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/runtime/server_test.go",
+        "internal/core/streams_test.go",
+        "internal/core/events_test.go",
+        "docs/verification/README.md"
+      ]
+    },
+    {
+      "mcp_tool": "tossinvest_set_subscriptions",
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "local_control",
+      "read_only_hint": false,
+      "first_milestone": "R2",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/runtime/server_test.go",
+        "internal/core/streams_test.go",
+        "internal/core/events_test.go",
+        "docs/verification/README.md"
+      ],
+      "contract_reference": "docs/interfaces.md#계좌-선택과-접속-권한"
+    },
+    {
+      "mcp_tool": "tossinvest_get_stream_status",
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "local_read",
+      "read_only_hint": true,
+      "first_milestone": "R2",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/runtime/server_test.go",
+        "internal/core/streams_test.go",
+        "internal/core/events_test.go",
+        "docs/verification/README.md"
+      ]
+    },
+    {
+      "mcp_tool": "tossinvest_get_stream_snapshot",
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "local_read",
+      "read_only_hint": true,
+      "first_milestone": "R2",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/runtime/server_test.go",
+        "internal/core/streams_test.go",
+        "internal/core/events_test.go",
+        "docs/verification/README.md"
+      ]
+    },
+    {
+      "mcp_tool": "tossinvest_list_order_events",
+      "available_modes": [
+        "readonly",
+        "trading"
+      ],
+      "broker_effect": "local_read",
+      "read_only_hint": true,
+      "first_milestone": "R2",
+      "status": "verified",
+      "verification_evidence": [
+        "internal/runtime/server_test.go",
+        "internal/core/streams_test.go",
+        "internal/core/events_test.go",
+        "docs/verification/README.md"
+      ],
+      "contract_reference": "docs/interfaces.md#주문-이벤트-페이지와-커서"
+    },
+    {
+      "mcp_tool": "tossinvest_execute_approved_action",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "broker_write",
+      "read_only_hint": false,
+      "first_milestone": "T1",
+      "status": "planned",
+      "verification_evidence": []
+    },
+    {
+      "mcp_tool": "tossinvest_pause_writes",
+      "available_modes": [
+        "trading"
+      ],
+      "broker_effect": "local_control",
+      "read_only_hint": false,
+      "first_milestone": "T1",
+      "status": "planned",
+      "verification_evidence": []
+    }
+  ]
+}

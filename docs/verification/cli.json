@@ -1,0 +1,1 @@
+{"client": "built CLI with local PTY", "selection": "passed", "revocation": "passed", "status": "passed", "credential_cleanup": "passed", "crash_stale_file_rejected": "passed", "crash_restart_rotation": "passed", "backend": "mock"}
